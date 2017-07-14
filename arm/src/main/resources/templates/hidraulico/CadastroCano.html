@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}">
+	
+<head>
+
+<!-- 	 <link rel='stylesheet prefetch' href='https://getuikit.com/assets/uikit/dist/css/uikit.css?nc=6094'> -->
+
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-dialog.min.css}"/>
+
+	 
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-10">
+					<h1>Cadastro de Cano para Água Fria</h1>
+				</div>
+				
+				<div class="col-sm-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/hidraulicos}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa de Canos</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+<div class="container-fluid">
+	<form  method="POST"   class="form-vertical  js-form-loading" th:object="${cano}" th:action="@{/hidraulicos/categorias/cano/novo}">
+	
+			<div class="alert  alert-danger  alert-dismissible" role="alert" th:if="${#fields.hasAnyErrors()}">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<th:block th:each="error : ${#fields.detailedErrors()}">
+					<div>
+						<i class="fa  fa-exclamation-circle"></i>
+						<span th:text="${error.message}"></span>
+					</div>
+				</th:block>
+			</div>
+		
+		 <div class="alert  alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+			 <span th:text="${mensagem}"></span>
+		</div>
+	
+			<div class="row">
+				<div class="col-sm-10  form-group">
+					<label for="nome">Nome</label>
+					<input id="nome" type="text" class="form-control" th:field="*{nome}"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="descricao">Descrição</label>
+				<textarea id="descricao" rows="3" class="form-control" th:field="*{descricao}"></textarea>
+			</div>
+			<div class="row">
+				<div class="col-sm-3  form-group  bw-required">
+					<label for="comprimento">Comprimento</label>
+					<input id="comprimento" type="text" class="form-control" th:field="*{comprimento}"/>					
+				</div>
+				<div class="col-sm-3  form-group  bw-required">
+					<label for="espessura">Espessura</label>
+					<input id="espessura" type="text" class="form-control" th:field="*{espessura}"/>					
+				</div>
+				<div class="col-sm-3  form-group  bw-required">
+					<label for="normaTecnica">Norma Técnica</label>
+					<input id="normaTecnica" type="text" class="form-control" th:field="*{normaTecnica}"/>					
+				</div>
+				<div class="col-sm-3  form-group  bw-required">
+					<label for="marca">Marca</label>
+					<input id="marca" type="text" class="form-control" th:field="*{marca}"/>					
+				</div>
+			</div>
+			<div class="row">
+			<div class="col-sm-3  form-group  bw-required">
+					<label for="valor" class="control-label">Valor</label>
+					<div class="input-group">
+						<div class="input-group-addon">R$</div>
+						<input id="valor" type="text" class="form-control  js-decimal" th:field="*{valor}"/>
+					</div>
+			</div>
+			
+					<div class="col-sm-3  form-group">
+						<label for="categoria">Categoria</label>
+						<select id="categoria" class="form-control" th:field="*{categoria}">
+								<option value="">Selecione a categoria</option>
+								<option th:each="categoria : ${categorias}" th:value="${categoria.codigo}" th:text="${categoria.nome}">Pale lager</option>
+						</select>
+					</div>
+						
+				<div class="form-group  col-sm-4">
+					<label  for="subcategoria">Tipo da Categória</label>
+					<div class="bw-field-action"> 
+						<select id="subcategoria" class="form-control" data:url="@{/subcategorias}">
+							<option value="">Selecione o Tipo da Categória</option>
+						</select>
+						
+						<div class="bw-field-action__icon  js-img-loading" style="display: none">
+							<img th:src="@{/images/mini-loading.gif}"/>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+			
+<!-- 			<div class="row"> -->
+<!-- 				<div class="form-group  col-sm-12"> -->
+<!-- 					<label class="control-label">Foto</label> -->
+					
+<!-- 					<div id="upload-drop" class="bw-upload"> -->
+<!-- 						<i class="glyphicon  glyphicon-cloud-upload"></i> -->
+<!-- 						<span>Arraste a foto aqui ou </span> -->
+<!-- 						<a class="bw-upload-form-file">selecione <input id="upload-select" type="file" accept=".jpg,.jpeg,.png"/></a> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+
+<!-- 		 <div class="test-upload uk-placeholder uk-text-center"> -->
+<!-- 		    <span uk-icon="icon: cloud-upload"></span> -->
+<!-- 		    <span class="uk-text-middle">Attach binaries by dropping them here or</span> -->
+<!-- 			    <div uk-form-custom> -->
+<!-- 			        <input type="file" multiple> -->
+<!-- 			        <span class="uk-link">selecting one <input type="file" accept=".jpg,.jpeg,.png"/></span> -->
+<!-- 			    </div> -->
+<!-- 		 </div> -->
+<!-- <!-- 		 <progress id="progressbar" class="uk-progress" value="0" max="100" hidden></progress> --> 
+<!--     ==================================================================================================== -->
+
+
+<!-- <div class="panel-body"> -->
+<!-- 				<div class="dropzone"> -->
+					
+<!-- 						<div class="dz-default dz-message file-dropzone text-center well col-sm-12"> -->
+
+<!-- 							<span class="glyphicon glyphicon-paperclip"></span> <span> -->
+<!-- 								To attach files, drag and drop here</span><br> <span>OR</span><br> -->
+<!-- 							<span>Just Click</span> -->
+<!-- 						</div> -->
+
+<!-- 						this is were the previews should be shown. -->
+<!-- 						<div class="dropzone-previews"></div> -->
+					
+<!-- 					<hr> -->
+<!-- 					<button id="upload-button" class="btn btn-primary"> -->
+<!-- 						<span class="glyphicon glyphicon-upload"></span> Upload -->
+<!-- 					</button> -->
+<!-- 					<a class="btn btn-primary pull-right" href="list"> -->
+<!-- 						<span class="glyphicon glyphicon-eye-open"></span> View All Uploads -->
+<!-- 					</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+
+<div class="panel panel-default">
+	<div class="panel-heading">Cálculo valor total</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="">Valor</label>
+					<input type="text" class="form-control" id="valor">
+				</div>
+			</div>
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="">Valor total</label>
+					<p class="form-control-static" id="total">0</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+			
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Salvar</button>
+			</div>
+	
+		</form>
+	
+	
+</div>
+</section>
+	
+</body>
+
+
+	
+	
+
+
+<th:block layout:fragment="javascript-extra">
+	
+<!-- 	 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script> -->
+<!-- 	<script src='https://getuikit.com/assets/uikit/dist/js/uikit.js?nc=6094'></script> -->
+<!-- 	<script src='https://getuikit.com/assets/uikit/dist/js/uikit-icons.js?nc=6094'></script> -->
+	
+	
+	<script th:src="@{/javascripts/vendors/bootstrap-dialog.min.js}"/></script>
+	<script th:src="@{/javascripts/vendors/dropzone.js}"/></script>
+	
+		   											
+	<script>
+
+	console.log('Iniciando...');
+
+	var valorElement = document.getElementById('valor');
+	var totalElement = document.getElementById('total');
+
+	valorElement.addEventListener('keyup', function(e) {
+		var total = 0;
+		var valor = parseFloat(valorElement.value ? valorElement.value : 0);
+
+		if (valor > 0 && valor < 10) {
+			total = valor + valor * 0.3 + 5;
+		} else if (valor >= 10 && valor < 50) {
+			total = valor + valor * 0.1 + 2;
+		} else {
+			total = valor;
+		}
+
+		totalElement.innerHTML = total;
+	});
+	
+// 	$(function() {
+// 		var settings = {
+// 				type: 'json',
+// 				filelimit: 1,
+// 				allow: '*.(jpg|jpeg|png)',
+// 				action: '/arm/fotos'
+// 		};
+		
+// 		UIkit.uploadSelect($('#upload-select'), settings);
+// 		UIkit.uploadDrop($('#upload-drop'), settings);
+// 	});
+	
+
+//     (function ($) {
+
+//         var bar = $("#progressbar")[0];
+
+//         UIkit.upload('.test-upload', {
+
+//             url: '/arm/fotos',
+//             multiple: true,
+
+//             beforeSend: function() { console.log('beforeSend', arguments); },
+//             beforeAll: function() { console.log('beforeAll', arguments); },
+//             load: function() { console.log('load', arguments); },
+//             error: function() { console.log('error', arguments); },
+//             complete: function() { console.log('complete', arguments); },
+
+//             loadStart: function (e) {
+//                 console.log('loadStart', arguments);
+
+//                 bar.removeAttribute('hidden');
+//                 bar.max =  e.total;
+//                 bar.value =  e.loaded;
+//             },
+
+//             progress: function (e) {
+//                 console.log('progress', arguments);
+
+//                 bar.max =  e.total;
+//                 bar.value =  e.loaded;
+
+//             },
+
+//             loadEnd: function (e) {
+//                 console.log('loadEnd', arguments);
+
+//                 bar.max =  e.total;
+//                 bar.value =  e.loaded;
+//             },
+
+//             completeAll: function () {
+//                 console.log('completeAll', arguments);
+
+//                 setTimeout(function () {
+//                     bar.setAttribute('hidden', 'hidden');
+//                 }, 1000);
+
+//                 alert('Upload Completed');
+//             }
+//         });
+
+//     })(jQuery);
+
+
+	</script>
+				
+	
+	
+</th:block>
+
+
+
+</html>
